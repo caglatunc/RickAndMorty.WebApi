@@ -9,7 +9,7 @@ public sealed record CharacterDto(
     string Gender,
     OriginDto Origin,
     LocationDto Location,
-    String Image,
+    string Image,
     List<string>Episode,
     string Url,
     DateTime Created);

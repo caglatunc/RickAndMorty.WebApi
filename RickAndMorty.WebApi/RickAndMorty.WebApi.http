@@ -1,6 +1,12 @@
 @RickAndMorty.WebApi_HostAddress = http://localhost:5230
 
-GET {{RickAndMorty.WebApi_HostAddress}}/weatherforecast/
+GET {{RickAndMorty.WebApi_HostAddress}}/api/Values/GetAllUsingRickAndMortyAPI
 Accept: application/json
 
 ###
+GET {{RickAndMorty.WebApi_HostAddress}}/api/Values/GetAllEpisode
+ccept: application/json
+
+###
+GET {{RickAndMorty.WebApi_HostAddress}}/api/Values/GetAllCharacter
+ccept: application/json

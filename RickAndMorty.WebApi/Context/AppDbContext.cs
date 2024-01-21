@@ -28,5 +28,17 @@ public sealed class AppDbContext : DbContext
 
         modelBuilder.Entity<Character>().HasMany<EpisodeCharacter>().WithOne(p => p.Character).OnDelete(DeleteBehavior.NoAction);
 
+        modelBuilder.Entity<Character>().HasOne(p => p.Location).WithMany().HasForeignKey(p => p.LocationId);
+
+        modelBuilder.Entity<Location>().HasMany<Character>().WithOne(p=>p.Location).OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<Character>().HasOne(p => p.Origin).WithMany().HasForeignKey(p => p.OriginId);
+
+        modelBuilder.Entity<Origin>().HasMany<Character>().WithOne(p => p.Origin).OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<Character>().HasIndex(i=>i.Url).IsUnique();
+
+        modelBuilder.Entity<Episode>().HasIndex(i => new {i.EpisodeNumber}).IsUnique();
+
     }
 }
