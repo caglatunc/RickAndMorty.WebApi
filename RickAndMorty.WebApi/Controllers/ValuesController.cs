@@ -30,7 +30,7 @@ public class ValuesController(
             {
                 foreach (var characterUrl in item.Characters)
                 {
-                    Character? character = context.Characters.FirstOrDefault(p => p.Url == characterUrl);//Veritabanında var mı diye kontrol ettim
+                    Character? character = context.Set<Character>().FirstOrDefault(p => p.Url == characterUrl);//Veritabanında var mı diye kontrol ettim
 
                     if (character is not null) continue;
 
@@ -56,7 +56,7 @@ public class ValuesController(
                             Url = characterDto.Url,
                         };
 
-                        Location? location = context.Locations.FirstOrDefault(p => p.Url == characterDto.Location.Url && p.Name == characterDto.Location.Name);
+                        Location? location = context.Set<Location>().FirstOrDefault(p => p.Url == characterDto.Location.Url && p.Name == characterDto.Location.Name);
 
                         if (location is null)
                         {
@@ -77,7 +77,7 @@ public class ValuesController(
                             character.LocationId = location.Id;
                         }
 
-                        Origin? origin = context.Origins.FirstOrDefault(p => p.Url == characterDto.Origin.Url && p.Name == characterDto.Origin.Name);
+                        Origin? origin = context.Set<Origin>().FirstOrDefault(p => p.Url == characterDto.Origin.Url && p.Name == characterDto.Origin.Name);
 
                         if (origin is null)
                         {
@@ -110,7 +110,7 @@ public class ValuesController(
             //Bölümleri Kaydet
             foreach (var item in episodeDto!.Results)
             {
-                Episode? episode = context.Episodes.FirstOrDefault(p => p.EpisodeNumber == item.Episode);
+                Episode? episode = context.Set<Episode>().FirstOrDefault(p => p.EpisodeNumber == item.Episode);
                 if (episode is null) continue;
 
                 episode = new()
@@ -129,7 +129,7 @@ public class ValuesController(
 
                 foreach (var url in item.Characters)
                 {
-                    Character? character = context.Characters.FirstOrDefault(p => p.Url == url);
+                    Character? character = context.Set<Character>().FirstOrDefault(p => p.Url == url);
 
                     if (character is not null)
                     {
@@ -160,7 +160,7 @@ public class ValuesController(
     public IActionResult GetAllEpisode()
     {
         List<ResultDto> episodes =
-            context.Episodes
+            context.Set<Episode>()
             .Include(p => p.EpisodeCharacters)!
             .ThenInclude(p => p.Character)
             .Select(s => new ResultDto(
@@ -178,7 +178,7 @@ public class ValuesController(
     [HttpGet]
     public IActionResult GetAllCharacter()
     {
-        List<Character> characters = context.Characters.OrderBy(p=>p.Name).ToList();
+        List<Character> characters = context.Set<Character>().OrderBy(p=>p.Name).ToList();
         return Ok(characters);
     }
 }
